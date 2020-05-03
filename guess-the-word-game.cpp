@@ -92,15 +92,23 @@ void play_game(int attempts=5)
   string selected_word = random_word_generator_function();
   //Now we are gonna create a vector of type char named current word state which will keep on updating itself
   vector<char>current_word_state;
+  // This loop is made to fill in the current_word_state vector with blank spaces('_') and vowels
   for(int i=0; i<selected_word.length();i++)
   {
+    //Here we are comparing whether the alphabet in the selected_word is a vowel or not
+    //If it's a vowel then we'll put the vowel in the vector and if its not a vowel then a '_' is inserted
     if(selected_word[i] == 'a' or selected_word[i]=='e' or selected_word[i]=='i' or selected_word[i]=='o' or selected_word[i]=='u')
       current_word_state.push_back(selected_word[i]);
     else
       current_word_state.push_back('_');
   }
-
+  //This variable will keep track of number of attemps that a player have
   int attempts_remaining = attempts;
+
+  //This function (print_current_state) is created to print the current state of the word that is how many characters
+  //user has guessed
+
+  //Here it is used to print the intial state which is at the start of the game
   print_current_state(current_word_state,attempts_remaining);
 
   while(1)
