@@ -86,49 +86,61 @@ bool check_game_status(string selected_word,vector<char>current_word_state,int a
 
 void play_game(int attempts=5)
 {
-  //This function contains main logic of our program
+  //This function contains main logic of our program.
 
-  //Here we are going to create a variable that will generate a random word using random_word_generator_function
+  //Here we are going to create a variable that will generate a random word using random_word_generator_function.
   string selected_word = random_word_generator_function();
-  //Now we are gonna create a vector of type char named current word state which will keep on updating itself
+  //Now we are gonna create a vector of type char named current word state which will keep on updating itself.
   vector<char>current_word_state;
-  // This loop is made to fill in the current_word_state vector with blank spaces('_') and vowels
+  // This loop is made to fill in the current_word_state vector with blank spaces('_') and vowels.
   for(int i=0; i<selected_word.length();i++)
   {
-    //Here we are comparing whether the alphabet in the selected_word is a vowel or not
-    //If it's a vowel then we'll put the vowel in the vector and if its not a vowel then a '_' is inserted
+    //Here we are comparing whether the alphabet in the selected_word is a vowel or not.
+    //If it's a vowel then we'll put the vowel in the vector and if its not a vowel then a '_' is inserted.
     if(selected_word[i] == 'a' or selected_word[i]=='e' or selected_word[i]=='i' or selected_word[i]=='o' or selected_word[i]=='u')
       current_word_state.push_back(selected_word[i]);
     else
       current_word_state.push_back('_');
   }
-  //This variable will keep track of number of attemps that a player have
+  //This variable will keep track of number of attemps that a player have.
   int attempts_remaining = attempts;
 
-  //This function (print_current_state) is created to print the current state of the word that is how many characters
-  //user has guessed
-
-  //Here it is used to print the intial state which is at the start of the game
+  //This function (print_current_state) is created to print the current state of the word.
+  //That is how many characters user has guessed.
+  //Here it is used to print the intial state which is at the start of the game.
   print_current_state(current_word_state,attempts_remaining);
 
+  //This is an infinite loop, the purpose of this loop is to run until and unless game ends.
   while(1)
   {
+    //Here user enters/guesses a Character.
     cout<<"Guess a Character: ";
     char input_char;
     cin>>input_char;
     cout<<endl;
+    //After the guess of user, we have to check whether character lies inside the the selected_word or not.
+    //If it resides then we have to update our current_word_state, if not we have to reduce number of attempts.
+    //Thus we create a variable of type pair containing vector<char> as first and int as second.
+    //This calls a function in order to get update on current_word_state and attempts_remaining.
     pair<vector<char>,int> word_and_attempt_update = input_character_in_word(selected_word,input_char,current_word_state,attempts_remaining);
+    //After the value is recieved in word_and_attempt_update(variable of type pair) we then update our
+    //current_word_state and attempts_remaining variables.
     current_word_state = word_and_attempt_update.first;
     attempts_remaining = word_and_attempt_update.second;
+    //The print_current_state function is now called to print the updated state after user's guess.
     print_current_state(current_word_state,attempts_remaining);
+    //We have to check whether a game has ended or not.
+    //Game can be ended in two ways only 1.User Won and 2.User Lost.
+    //Thus we need to create a function in order to check the status of the game which will return a value in True or False
     bool game_ended = check_game_status(selected_word,current_word_state,attempts_remaining);
     if(game_ended)
+    //If game ended then we will move out of the infinte loop
       break;
   }
 }
 
 int main()
 {
-  play_game(5);
+  play_game();
   return 0;
 }
