@@ -51,6 +51,7 @@ pair<vector<char>,int> input_character_in_word(string selected_word,char input_c
 }
 void print_current_state(vector<char>current_word_state, int attempts_remaining)
 {
+  //This function is used to print the current state of the word and it also shows how much attempts user is left with
   cout<<"Current State: "<<" ";
   for(int i=0; i<current_word_state.size(); i++)
     cout<<current_word_state[i]<<" ";
@@ -60,14 +61,19 @@ void print_current_state(vector<char>current_word_state, int attempts_remaining)
 
 bool check_game_status(string selected_word,vector<char>current_word_state,int attempts_remaining)
 {
+  //This function checks whether the game has ended or not.
+  //There are two ways for a game to end win or loss
   int flag = 0;
+
+  //This if statement checks whether the attemps are Remaining or not. If no then game ends and user loses.
   if(attempts_remaining<=0)
   {
     cout<<"You Loose :( Please! Try Again"<<endl;
     cout<<"The word was: "<<selected_word<<endl;
     return true;
   }
-
+  //This part checks if the word is guessed by the user correctly or not. If the current_word_state and selected_word
+  //matches then user has won the game.
   for(int i=0; i<selected_word.length(); i++)
     if(selected_word[i] != current_word_state[i])
     {
