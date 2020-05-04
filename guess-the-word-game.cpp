@@ -17,10 +17,10 @@ string random_word_generator_function()
 //This function updates the characters for the current state of the word
 vector<char> change_current_word_state(string selected_word, vector<char> current_word_state, char input_char)
 {
-  //variable of type vector<char> is created in order to update the word since we have to have current word state as well
-  //thus we can not modify directly into the current state
+  //variable of type vector<char> is created in order to update the word, since current word state is needed as well
+  //thus can not be modified directly into the current state
   vector<char>modified_word_state;
-  //if the character matches then it is pushed into the modified_word_state else current_word_state character is pushed
+  //In this loop if the character matches then it is pushed into the modified_word_state else current_word_state character is pushed
   for(int i=0; i<selected_word.length(); i++)
   {
     if(selected_word[i]==input_char and current_word_state[i]=='_')
@@ -62,10 +62,9 @@ pair<vector<char>,int> input_character_in_word(string selected_word,char input_c
     return word_and_attempt_update;
 }
 
-//This function is used to print the current state of the word and it also shows how much attempts user is left with
+//This function prints the current state of the word and it also shows how much attempts user is left with
 void print_current_state(vector<char>current_word_state, int attempts_remaining)
 {
-  //This function is used to print the current state of the word and it also shows how much attempts user is left with
   cout<<"Current State: "<<" ";
   for(int i=0; i<current_word_state.size(); i++)
     cout<<current_word_state[i]<<" ";
@@ -104,18 +103,18 @@ bool check_game_status(string selected_word,vector<char>current_word_state,int a
     return false;
 }
 
-//This function contains main logic of our program.
+//This function contains main logic of program.
 void play_game(int attempts=5)
 {
-  //Here we are going to create a variable that will generate a random word using random_word_generator_function.
+  //Here a variable of type string is created that will store a random word using random_word_generator_function.
   string selected_word = random_word_generator_function();
-  //Now we are gonna create a vector of type char named current word state which will keep on updating itself.
+  //A vector of type char is created, which will hold the current state of the word and keeps on updating itself.
   vector<char>current_word_state;
   // This loop is made to fill in the current_word_state vector with blank spaces('_') and vowels.
   for(int i=0; i<selected_word.length();i++)
   {
-    //Here we are comparing whether the alphabet in the selected_word is a vowel or not.
-    //If it's a vowel then we'll put the vowel in the vector and if its not a vowel then a '_' is inserted.
+    //In this if statement comparision is made whether the alphabet in the selected_word is a vowel or not.
+    //If it's a vowel then the vowel is pushed in the vector and if its not a vowel then a '_' is inserted.
     if(selected_word[i] == 'a' or selected_word[i]=='e' or selected_word[i]=='i' or selected_word[i]=='o' or selected_word[i]=='u')
       current_word_state.push_back(selected_word[i]);
     else
@@ -125,7 +124,7 @@ void play_game(int attempts=5)
   int attempts_remaining = attempts;
 
   //This function (print_current_state) is created to print the current state of the word.
-  //That is how many characters user has guessed.
+  //That is how many characters user has guessed and the number of attemps user is left with.
   //Here it is used to print the intial state which is at the start of the game.
   print_current_state(current_word_state,attempts_remaining);
 
@@ -137,23 +136,23 @@ void play_game(int attempts=5)
     char input_char;
     cin>>input_char;
     cout<<endl;
-    //After the guess of user, we have to check whether character lies inside the the selected_word or not.
-    //If it resides then we have to update our current_word_state, if not we have to reduce number of attempts.
-    //Thus we create a variable of type pair containing vector<char> as first and int as second.
+    //After the guess of user, It is checked whether character lies inside the the selected_word or not.
+    //If it resides then update current_word_state, if not then reduce number of attempts.
+    //Thus a variable is created, it should be of type pair containing vector<char> as first and int as second.
     //This calls a function in order to get update on current_word_state and attempts_remaining.
     pair<vector<char>,int> word_and_attempt_update = input_character_in_word(selected_word,input_char,current_word_state,attempts_remaining);
-    //After the value is recieved in word_and_attempt_update(variable of type pair) we then update our
-    //current_word_state and attempts_remaining variables.
+    //After the value is recieved in word_and_attempt_update(variable of type pair) then,
+    //the current_word_state and attempts_remaining variables.
     current_word_state = word_and_attempt_update.first;
     attempts_remaining = word_and_attempt_update.second;
-    //The print_current_state function is now called to print the updated state after user's guess.
+    //The print_current_state function is called to print the updated state after user's guess.
     print_current_state(current_word_state,attempts_remaining);
     //We have to check whether a game has ended or not.
     //Game can be ended in two ways only 1.User Won and 2.User Lost.
-    //Thus we need to create a function in order to check the status of the game which will return a value in True or False
+    //Thus a function is created in order to check the status of the game which will return a value in True or False
     bool game_ended = check_game_status(selected_word,current_word_state,attempts_remaining);
     if(game_ended)
-    //If game ended then we will move out of the infinte loop
+    //If game ended then move out of the infinte loop
       break;
   }
 }
