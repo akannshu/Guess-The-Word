@@ -43,11 +43,23 @@ pair<vector<char>,int> input_character_in_word(string selected_word,char input_c
   for(int i=0; i<selected_word.length(); i++)
     if(selected_word[i]==input_char)
     {
+      // This loop is used to check whether the user is trying to enter the same alphabet again  if the user does so
+      // number of attempts are reduced 
+      for(int i=0; i<selected_word.length(); i++)
+      {
+        if(current_word_state[i] == input_char)
+        {
+          flag = 0;
+          break;
+        }
+
+        flag = 1;
+      }
+
+      if(!flag) break;
       //if match happens then change_current_word_state function is called in order to update the current_word_state
       current_word_state = change_current_word_state(selected_word, current_word_state, input_char);
       flag = 1;
-      if(selected_word[i] == 'a' or selected_word[i]=='e' or selected_word[i]=='i' or selected_word[i]=='o' or selected_word[i]=='u')
-        flag=0;
     }
     //updated values are put in pairs and then the pair is returned
     word_and_attempt_update.first = current_word_state;
@@ -81,8 +93,10 @@ bool check_game_status(string selected_word,vector<char>current_word_state,int a
   //This if statement checks whether the attemps are Remaining or not. If no then game ends and user loses.
   if(attempts_remaining<=0)
   {
+    cout<<endl;
     cout<<"You Loose :( Please! Try Again"<<endl;
     cout<<"The word was: "<<selected_word<<endl;
+    cout<<endl;
     return true;
   }
   //This loop checks if the word is guessed by the user correctly or not. If the current_word_state and selected_word
@@ -96,7 +110,9 @@ bool check_game_status(string selected_word,vector<char>current_word_state,int a
 
     if(flag==0)
     {
+      cout<<endl;
       cout<<"You Won :D, Good Going!"<<endl;
+      cout<<endl;
       return true;
     }
 
